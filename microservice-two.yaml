@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-two-deployment
+  labels:
+    app: microservice-two
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microservice-two
+  template:
+    metadata:
+      labels:
+        app: microservice-two
+    spec:
+      containers:
+      - name: microservice-two
+        image: mikeskuse/microservice-two:0.1.12 
+        ports:
+        - containerPort: 8001

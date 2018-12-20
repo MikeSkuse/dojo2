@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/mern-starter
+    # The primary container is an instance of the first image listed. The job's commands run in this container.
+    docker:
+      - image: mikeskuse/buildimage
+    steps:
+      - checkout
+      - setup_remote_docker:   # (2)
+          docker_layer_caching: true # (3)
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t mikeskuse/microservice-two:$TAG .
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker push mikeskuse/microservice-two:$TAG
+          az login --service-principal --username $AZURE_USER --password $AZURE_PASS --tenant $TENNANT_ID
+          az aks get-credentials --resource-group acctestRG1 --name acctestaks1
+          sed "s/:0.1.12/:$TAG/" <microservice-two.yaml >microservice-two-updated.yaml
+          #cat microservice-two-updated.yaml
+          kubectl apply -f microservice-two-service.yaml
+          kubectl apply -f microservice-two-updated.yaml

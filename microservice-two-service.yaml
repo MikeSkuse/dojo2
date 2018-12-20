@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-two-svc
+  labels:
+    app: microservice-two
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8001
+    protocol: TCP
+  selector:
+    app: microservice-two

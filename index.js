@@ -1,5 +1,5 @@
 var appzip = require('appmetrics-zipkin')({
-    host: '51.141.12.4',
+    host: '51.141.27.162',
     port: 9411,
     serviceName:"microservice-two",
     sampleRate: 1.0

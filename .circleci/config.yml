@@ -17,6 +17,12 @@ jobs:
           az login --service-principal --username $AZURE_USER --password $AZURE_PASS --tenant $TENNANT_ID
           az aks get-credentials --resource-group acctestRG1 --name acctestaks1
           sed "s/:0.1.12/:$TAG/" <microservice-two.yaml >microservice-two-updated.yaml
+          mkdir /tmp/artifacts
+          cp microservice-one-service.yaml /tmp/artifacts/
+          cp microservice-one-updated.yaml /tmp/artifacts/
+          cp microservice-one.yaml /tmp/artifacts/
           #cat microservice-two-updated.yaml
           kubectl apply -f microservice-two-service.yaml
           kubectl apply -f microservice-two-updated.yaml
+      - store_artifacts:
+          path: /tmp/artifacts

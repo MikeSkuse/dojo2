@@ -1,3 +1,9 @@
+var appzip = require('appmetrics-zipkin')({
+    host: '51.140.226.164',
+    port: 9411,
+    serviceName:"microservice-two",
+    sampleRate: 1.0
+  });
 const server = require('./lib/server')
 const pkg = require('./package.json')
 const PORT = process.env.PORT || 8001
